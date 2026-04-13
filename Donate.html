@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate | invokevirtual</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;800&family=JetBrains+Mono:wght@500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --panel: #111114;
+      --border: #222226;
+      --accent: #6366f1;
+      --text-main: #ffffff;
+      --text-dim: #71717a;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: 0.15s ease;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .header {
+      margin-bottom: 24px;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin: 0;
+    }
+
+    .header p {
+      color: var(--text-dim);
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    .terminal {
+      background: #0d0d10;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      scrollbar-width: none;
+    }
+
+    .tab {
+      padding: 8px 14px;
+      background: transparent;
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-dim);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tab:hover {
+      border-color: #333;
+      color: #eee;
+    }
+
+    .tab.active {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+
+    .display-well {
+      background: #050505;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border: 1px solid #161616;
+    }
+
+    .net-tag {
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .address {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      word-break: break-all;
+      color: #ccc;
+      line-height: 1.5;
+    }
+
+    /* Bank-specific multi-field layout */
+    .bank-fields {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .bank-fields.visible {
+      display: flex;
+    }
+
+    .bank-field {
+      background: #050505;
+      border-radius: 12px;
+      padding: 14px 16px;
+      border: 1px solid #161616;
+    }
+
+    .bank-field .net-tag {
+      margin-bottom: 4px;
+    }
+
+    .bank-field .address {
+      font-size: 13px;
+    }
+
+    .bank-field-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .btn-copy-field {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      border: 1px solid #222;
+      background: #16161a;
+      color: #aaa;
+    }
+
+    .btn-copy-field:hover {
+      background: #1c1c22;
+      border-color: #444;
+      color: #fff;
+    }
+
+    .btn-copy {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      border: 1px solid #222;
+      background: #16161a;
+      color: #fff;
+    }
+
+    .btn-copy:hover {
+      background: #1c1c22;
+      border-color: #444;
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 11px;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="toast">COPIED</div>
+
+  <div class="container">
+    <div class="header">
+      <h1>Support.</h1>
+      <p>Help fund the open-source mission.</p>
+    </div>
+
+    <div class="terminal">
+      <div class="tabs">
+        <div class="tab" data-id="bank" onclick="switchTab('bank', this)">Bank</div>
+        <div class="tab" data-id="btc" onclick="switchTab('btc', this)">BTC</div>
+        <div class="tab" data-id="eth" onclick="switchTab('eth', this)">ETH</div>
+        <div class="tab" data-id="sol" onclick="switchTab('sol', this)">SOL</div>
+        <div class="tab" data-id="xmr" onclick="switchTab('xmr', this)">XMR</div>
+        <div class="tab" data-id="poly" onclick="switchTab('poly', this)">POLY</div>
+      </div>
+
+      <!-- Standard crypto display well (hidden for bank tab) -->
+      <div class="display-well" id="crypto-well">
+        <span class="net-tag" id="net-label">Network</span>
+        <div class="address" id="addr-box">...</div>
+      </div>
+
+      <!-- Bank tab: single box for Account Number and IBAN -->
+      <div class="bank-fields" id="bank-well">
+        <div class="bank-field">
+          <div style="text-align:center; font-size:13px; font-weight:800; color:#fff; letter-spacing:-0.3px; margin-bottom:12px;">Easypaisa Bank</div>
+
+          <span class="net-tag">Account Number</span>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+            <div class="address" id="bank-accno" style="flex:1;">12345678901234</div>
+            <button onclick="copyField('bank-accno', 'Account Number')" style="flex-shrink:0; width:28px; height:28px; border-radius:7px; border:1px solid #2a2a2e; background:#1a1a1f; color:#888; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </div>
+
+          <div style="height:1px; background:#1a1a1a; margin:12px 0;"></div>
+
+          <span class="net-tag">IBAN</span>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+            <div class="address" id="bank-iban" style="flex:1;">GB29NWBK60161331926819</div>
+            <button onclick="copyField('bank-iban', 'IBAN')" style="flex-shrink:0; width:28px; height:28px; border-radius:7px; border:1px solid #2a2a2e; background:#1a1a1f; color:#888; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Single copy button for crypto tabs -->
+      <button class="btn-copy" id="copy-btn" onclick="copyAction()">Copy Address</button>
+    </div>
+  </div>
+
+  <script>
+    const wallets = {
+      btc:  { addr: "bc1q3eesyfn7lhql4c2khv56cyvw2374zkhe7r97hz", net: "Bitcoin Mainnet" },
+      eth:  { addr: "0xD80A8D6E0fa433A8bDFC2D3F325159Db70605816",  net: "Ethereum Network" },
+      sol:  { addr: "7FxTAJLmhXFp6wxVbUTpf8jDmzEX1CKVMdE8oLPNQvyb",  net: "Solana Network" },
+      xmr:  { addr: "848dAWBVk8GMaoRHg6HUP5CbkpY9pJra1KNQAo9yJ6vbJLFsjFD8ZHkGpi6FhVY7rsD4U9iR7brk64eknsC3bS7tV9JRU4f", net: "Monero Privacy" },
+      poly: { addr: "0xD80A8D6E0fa433A8bDFC2D3F325159Db70605816",  net: "Polygon (PoS)" },
+      // Bank: account number and IBAN — update these values
+      bank: { accno: "12345678901234", iban: "GB29NWBK60161331926819", net: "Bank Transfer" }
+    };
+
+    function showToast(label) {
+      const toast = document.getElementById('toast');
+      toast.textContent = label + ' Copied';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function switchTab(id, el) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+
+      const cryptoWell = document.getElementById('crypto-well');
+      const bankWell   = document.getElementById('bank-well');
+      const copyBtn    = document.getElementById('copy-btn');
+
+      if (id === 'bank') {
+        cryptoWell.style.display = 'none';
+        bankWell.classList.add('visible');
+        copyBtn.style.display = 'none';
+        // Sync values in case you change them above
+        document.getElementById('bank-accno').innerText = wallets.bank.accno;
+        document.getElementById('bank-iban').innerText  = wallets.bank.iban;
+      } else {
+        cryptoWell.style.display = 'block';
+        bankWell.classList.remove('visible');
+        copyBtn.style.display = 'block';
+        const data = wallets[id];
+        document.getElementById('addr-box').innerText  = data.addr;
+        document.getElementById('net-label').innerText = data.net;
+      }
+    }
+
+    function copyField(elementId, label) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => showToast(label));
+    }
+
+    function copyAction() {
+      const text = document.getElementById('addr-box').innerText;
+      navigator.clipboard.writeText(text).then(() => showToast('ADDRESS'));
+    }
+
+    window.onload = () => {
+      switchTab('bank', document.querySelector('[data-id="bank"]'));
+    };
+  </script>
+</body>
+
+</html>
