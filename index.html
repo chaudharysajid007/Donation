@@ -216,8 +216,8 @@
 
   <div class="container">
     <div class="header">
-      <h1>Support.</h1>
-      <p>Help fund the open-source mission.</p>
+      <h1>Support</h1>
+      <p>If you don’t donate, we both know why</p>
     </div>
 
     <div class="terminal">
@@ -241,9 +241,9 @@
         <div class="bank-field">
           <div style="text-align:center; font-size:13px; font-weight:800; color:#fff; letter-spacing:-0.3px; margin-bottom:12px;">Easypaisa Bank</div>
 
-          <span class="net-tag">Account Number</span>
+          <span class="net-tag">Digital Account Number</span>
           <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-            <div class="address" id="bank-accno" style="flex:1;">12345678901234</div>
+            <div class="address" id="bank-accno" style="flex:1;">97874674</div>
             <button onclick="copyField('bank-accno', 'Account Number')" style="flex-shrink:0; width:28px; height:28px; border-radius:7px; border:1px solid #2a2a2e; background:#1a1a1f; color:#888; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
             </button>
@@ -253,7 +253,7 @@
 
           <span class="net-tag">IBAN</span>
           <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-            <div class="address" id="bank-iban" style="flex:1;">GB29NWBK60161331926819</div>
+            <div class="address" id="bank-iban" style="flex:1;">PK73TMFB0000000080971616</div>
             <button onclick="copyField('bank-iban', 'IBAN')" style="flex-shrink:0; width:28px; height:28px; border-radius:7px; border:1px solid #2a2a2e; background:#1a1a1f; color:#888; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
             </button>
@@ -268,13 +268,13 @@
 
   <script>
     const wallets = {
-      btc:  { addr: "bc1q3eesyfn7lhql4c2khv56cyvw2374zkhe7r97hz", net: "Bitcoin Mainnet" },
-      eth:  { addr: "0xD80A8D6E0fa433A8bDFC2D3F325159Db70605816",  net: "Ethereum Network" },
-      sol:  { addr: "7FxTAJLmhXFp6wxVbUTpf8jDmzEX1CKVMdE8oLPNQvyb",  net: "Solana Network" },
-      xmr:  { addr: "848dAWBVk8GMaoRHg6HUP5CbkpY9pJra1KNQAo9yJ6vbJLFsjFD8ZHkGpi6FhVY7rsD4U9iR7brk64eknsC3bS7tV9JRU4f", net: "Monero Privacy" },
-      poly: { addr: "0xD80A8D6E0fa433A8bDFC2D3F325159Db70605816",  net: "Polygon (PoS)" },
+      btc:  { addr: "bc1quqtydnagnpnqlrwdslns54fufuxu9z5tn48vkf", net: "Bitcoin Mainnet" },
+      eth:  { addr: "0x70d9EC7cE8F6102Cb94efCeDDa7553575315ADA6",  net: "Ethereum Network" },
+      sol:  { addr: "J1esbke23oWrodWFcHqBXJwA35FLVWbBZqgopVpNhyh7",  net: "Solana Network" },
+      Usdt:  { addr: "0x70d9EC7cE8F6102Cb94efCeDDa7553575315ADA6", net: "Tether USD BEP(20)" },
+      Usdt: { addr: "TZ3CEbzyZLi59BsH1PGFEaBmT1Uf7nmafU",  net: "Tether (TRC20)" },
       // Bank: account number and IBAN — update these values
-      bank: { accno: "12345678901234", iban: "GB29NWBK60161331926819", net: "Bank Transfer" }
+      bank: { accno: "97874674", iban: "PK73TMFB0000000080971616", net: "Bank Transfer" }
     };
 
     function showToast(label) {
